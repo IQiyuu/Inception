@@ -1,20 +1,17 @@
 # environnement de la machine (debian>alpine car plus light)
-FROM alpine:3.20.1
+FROM debian:buster
 
 # update apk (apk = apt)
-RUN apk update
-
-# upgrade apk (apk = apt)
-RUN apk upgrade
+RUN apt update -y
 
 # install nginx
-RUN apk add nginx
+RUN apt-get install nginx -y
 
 # creer un dossier pour stocker la clef ssl
 RUN mkdir -p /etc/nginx/ssl
 
 # install ssl pour creer la clef
-RUN apk add openssl
+RUN apt-get install openssl -y
 
 # creer le certificat et la clef auto-signee ssl -x le format
 RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=Alsace/L=Mulhouse/O=42/OU=42/CN=dgoubin.42.fr/UID=dgoubin"
@@ -23,7 +20,7 @@ RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/ngin
 RUN mkdir -p /var/run/nginx/
 
 # ajoute les droits pour le root
-RUN chnod 755 /var/www/html
+RUN chmod 755 /var/www/html
 
 # ajoute les droits pour le main user
 RUN chown -R www-data:www-data /var/www/html

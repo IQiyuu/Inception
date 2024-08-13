@@ -1,12 +1,13 @@
 # environnement de la machine (debian>alpine car plus light)
-FROM alpine:3.20.1
+FROM debian:buster
 
 # apk = apt de debian
-RUN apk upgrade
-RUN apk update
+RUN apt update -y
+
+RUN     apt upgrade -y
 
 # on installe mariadb
-RUN apk add mariadb
+RUN apt-get install mariadb-server -y
 
 # COPY le fichier conf dans le container
 COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
