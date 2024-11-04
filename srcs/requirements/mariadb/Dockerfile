@@ -4,7 +4,7 @@ FROM debian:buster
 # apk = apt de debian
 RUN apt update -y
 
-RUN     apt upgrade -y
+RUN apt upgrade -y
 
 # on installe mariadb
 RUN apt-get install mariadb-server -y
